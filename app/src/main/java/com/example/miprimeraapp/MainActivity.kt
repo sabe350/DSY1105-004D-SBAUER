@@ -52,7 +52,7 @@ class EntradaVip(
 
 fun main(){
     val entrada1 = EntradaGeneral(232, 56000, "evento1")
-    val entrada2 = EntradaVip(254, 56000, "evento1", "beneficio1")
+    val entrada2 = EntradaVip(254, 76000, "evento1", "beneficio1")
 
     val ventasGen = listOf<EntradaGeneral>()
     val venatsVip = listOf<EntradaVip>()
