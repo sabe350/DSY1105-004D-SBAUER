@@ -18,3 +18,45 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+open class Entrada(
+    val id: Int,
+    val precio: Int,
+    val ev: String
+){
+    open fun mostrarDetalle(): String{
+        return "$id $precio $ev"
+    }
+}
+
+class EntradaGeneral(
+    id: Int,
+    precio: Int,
+    ev: String
+): Entrada(id, precio, ev){
+    override fun mostrarDetalle(): String{
+        return println("ID: $id  $ev Tipo de entrada: General  Precio: $$precio").toString()
+    }
+}
+class EntradaVip(
+    id: Int,
+    precio: Int,
+    ev: String,
+    val beneficiosExtra: String
+): Entrada(id, precio, ev){
+    override fun mostrarDetalle(): String {
+        return println("ID: $id  $ev Tipo de entrada: VIP  Precio: $$precio  Beneficios: $beneficiosExtra").toString()
+    }
+
+}
+
+fun main(){
+    val entrada1 = EntradaGeneral(232, 56000, "evento1")
+    val entrada2 = EntradaVip(254, 56000, "evento1", "beneficio1")
+
+    val ventasGen = listOf<EntradaGeneral>()
+    val venatsVip = listOf<EntradaVip>()
+
+    entrada1.mostrarDetalle()
+    entrada2.mostrarDetalle()
+}
