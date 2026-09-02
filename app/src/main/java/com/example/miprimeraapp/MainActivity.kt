@@ -29,15 +29,17 @@ open class Entrada(
     }
 }
 
-class EntradaGeneral(id: Int, precio: Int, ev: String): Entrada(id, precio, ev){override fun mostrarDetalle(): String{
-    return println("ID: $id  $ev Tipo de entrada: General  Precio: $$precio").toString()
-}
+class EntradaGeneral(id: Int, precio: Int, ev: String): Entrada(id, precio, ev){
+    override fun mostrarDetalle(): String{
+        return println("ID: $id  $ev Tipo de entrada: General  Precio: $$precio").toString()
+    }
 }
 class EntradaVip(id: Int,precio: Int,ev: String,
                  val beneficiosExtra: String
-): Entrada(id, precio, ev){override fun mostrarDetalle(): String {
-    return println("ID: $id  $ev Tipo de entrada: VIP  Precio: $$precio  Beneficios: $beneficiosExtra").toString()
-}
+): Entrada(id, precio, ev){
+    override fun mostrarDetalle(): String {
+        return println("ID: $id  $ev Tipo de entrada: VIP  Precio: $$precio  Beneficios: $beneficiosExtra").toString()
+    }
 
 }
 
@@ -51,4 +53,5 @@ fun main(){
 
     entrada1.mostrarDetalle()
     entrada2.mostrarDetalle()
+
 }
