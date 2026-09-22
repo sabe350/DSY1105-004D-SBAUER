@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ventasdistrubucion_grupox.ui.theme.VentasDistrubucion_GrupoXTheme
-
+import ui.HomeScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +40,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    VentasDistrubucion_GrupoXTheme {
-        Greeting("Android")
-    }
+fun HomeScreenPreview(){
+    HomeScreen()
 }
