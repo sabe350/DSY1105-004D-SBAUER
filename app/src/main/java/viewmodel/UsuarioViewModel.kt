@@ -39,7 +39,7 @@ class UsuarioViewModel: ViewModel() {
         val errores = UsuarioErrores(
             nombre = if (estadoActual.nombre.isBlank()) "Campo Obligatorio" else null,
             correo = if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
-            clave = if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else if (estadoActual.clave.isBlank()) "Debe Rellenar este campo" else null,
+            clave = if (estadoActual.clave.isBlank()) "Debe Rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else null,
             direccion = if (estadoActual.direccion.isBlank()) "Campo Obligatorio" else null
         )
 
