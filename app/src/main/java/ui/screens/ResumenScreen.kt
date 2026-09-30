@@ -7,13 +7,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import viewmodel.UsuarioViewModel
 
 @Composable
 fun ResumenScreen(viewModel: UsuarioViewModel){
-    val estado by viewModel.estado.collectAsState()
+        val estado by viewModel.estado.collectAsState()
 
     Column(Modifier.padding(10.dp)) {
         Text("Resumen del registro", style = MaterialTheme.typography.headlineMedium)

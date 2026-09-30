@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ventasdistrubucion_grupox.ui.theme.VentasDistrubucion_GrupoXTheme
+import navigation.AppNavigation
 import ui.screens.HomeScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
             VentasDistrubucion_GrupoXTheme {
                 Scaffold { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)){
-                        HomeScreen()
+                        AppNavigation()
                     }
 
                 }
