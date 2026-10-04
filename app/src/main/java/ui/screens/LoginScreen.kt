@@ -46,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,7 +114,7 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    if (viewModel.validarFomulario()) {
+                    if (viewModel.validarInicioSesion()) {
                         navController.navigate("resumen")
                     }
                 },

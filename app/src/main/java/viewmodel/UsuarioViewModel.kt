@@ -34,6 +34,22 @@ class UsuarioViewModel: ViewModel() {
         _estado.update { it.copy(aceptaTerminos = valor) }
     }
 
+    fun validarInicioSesion(): Boolean{
+        val estadoActual = _estado.value
+        val errores = UsuarioErrores(
+            correo = if (estadoActual.correo.isBlank()) "Campo Obligatorio" else if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
+            clave = if (estadoActual.clave.isBlank()) "Debe Rellenar este campo" else null
+        )
+
+        val hayErrores = listOfNotNull(
+            errores.correo,
+            errores.clave,
+        ).isNotEmpty()
+
+        _estado.update { it.copy(errores = errores) }
+
+        return !hayErrores
+    }
     fun validarFomulario(): Boolean {
         val estadoActual = _estado.value
         val errores = UsuarioErrores(
