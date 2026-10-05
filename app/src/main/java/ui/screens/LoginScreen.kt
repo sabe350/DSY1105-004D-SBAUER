@@ -114,7 +114,7 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    if (viewModel.validarInicioSesion()) {
+                    if (viewModel.validarInicioSesion() && viewModel.validarCredenciales()) {
                         navController.navigate("resumen")
                     }
                 },

@@ -50,6 +50,23 @@ class UsuarioViewModel: ViewModel() {
 
         return !hayErrores
     }
+
+    fun validarCredenciales(): Boolean{
+        val estadoActual = _estado.value
+        val errores = UsuarioErrores(
+            correo = if (estadoActual.correo != "admin@admin.com") "Credenciales invalidas" else null,
+            clave = if (estadoActual.clave != "1234") "Credenciales invalidas" else null
+        )
+
+        val hayErrores = listOfNotNull(
+            errores.correo,
+            errores.clave
+        ).isNotEmpty()
+
+        _estado.update {  it.copy(errores = errores) }
+
+        return !hayErrores
+    }
     fun validarFomulario(): Boolean {
         val estadoActual = _estado.value
         val errores = UsuarioErrores(
