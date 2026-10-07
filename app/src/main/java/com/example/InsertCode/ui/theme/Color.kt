@@ -1,4 +1,4 @@
-package com.example.ventasdistrubucion_grupox.ui.theme
+package com.example.InsertCode.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

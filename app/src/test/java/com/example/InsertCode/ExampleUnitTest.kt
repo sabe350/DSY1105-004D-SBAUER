@@ -1,4 +1,4 @@
-package com.example.ventasdistrubucion_grupox
+package com.example.InsertCode
 
 import org.junit.Test
 

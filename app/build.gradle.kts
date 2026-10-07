@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ventasdistrubucion_grupox"
+    namespace = "com.example.InsertCode"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.ventasdistrubucion_grupox"
+        applicationId = "com.grupox.InsertCode"
         minSdk = 34
         targetSdk = 37
         versionCode = 1

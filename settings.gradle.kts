@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VentasDistrubucion_GrupoX"
+rootProject.name = "InsertCode"
 include(":app")
