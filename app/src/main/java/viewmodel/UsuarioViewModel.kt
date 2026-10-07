@@ -13,9 +13,6 @@ class UsuarioViewModel: ViewModel() {
 
     val estado: StateFlow<UsuarioUiState> = _estado
 
-    fun onNombreChange(valor: String){
-        _estado.update { it.copy(nombre = valor, errores = it.errores.copy(nombre = null)) }
-    }
 
     fun onCorreoChange(valor: String){
         _estado.update { it.copy(correo = valor, errores = it.errores.copy(correo = null)) }
@@ -26,13 +23,6 @@ class UsuarioViewModel: ViewModel() {
     }
 
 
-    fun onDireccionChange(valor: String){
-        _estado.update { it.copy(direccion = valor, errores = it.errores.copy(direccion = null)) }
-    }
-
-    fun onAceptarTerminosChange(valor: Boolean){
-        _estado.update { it.copy(aceptaTerminos = valor) }
-    }
 
     fun validarInicioSesion(): Boolean{
         val estadoActual = _estado.value
@@ -54,8 +44,8 @@ class UsuarioViewModel: ViewModel() {
     fun validarCredenciales(): Boolean{
         val estadoActual = _estado.value
         val errores = UsuarioErrores(
-            correo = if (estadoActual.correo != "admin@admin.com") "Credenciales invalidas" else null,
-            clave = if (estadoActual.clave != "1234") "Credenciales invalidas" else null
+            correo = if (estadoActual.correo == "admin@guardian.net" || estadoActual.correo == "supervisor@guardian.net" || estadoActual.correo == "operador@guardian.net") null else "Credenciales invalidas",
+            clave = if (estadoActual.clave != "123456") "Credenciales invalidas" else null
         )
 
         val hayErrores = listOfNotNull(
@@ -67,24 +57,16 @@ class UsuarioViewModel: ViewModel() {
 
         return !hayErrores
     }
-    fun validarFomulario(): Boolean {
+
+    fun tipoInicio(): String{
         val estadoActual = _estado.value
-        val errores = UsuarioErrores(
-            nombre = if (estadoActual.nombre.isBlank()) "Campo Obligatorio" else null,
-            correo = if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
-            clave = if (estadoActual.clave.isBlank()) "Debe Rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else null,
-            direccion = if (estadoActual.direccion.isBlank()) "Campo Obligatorio" else null
+        val tipoUser = UsuarioUiState(
+            tipo = (if (estadoActual.correo == "admin@guardian.net") "admin" else
+                if (estadoActual.correo == "supervisor@guardian.net") "supervisor" else
+                    if (estadoActual.correo == "operador@guardian.net") "operador" else null).toString()
         )
 
-        val hayErrores = listOfNotNull(
-            errores.nombre,
-            errores.correo,
-            errores.clave,
-            errores.direccion
-        ).isNotEmpty()
-
-        _estado.update { it.copy(errores = errores) }
-
-        return !hayErrores
+        return tipoUser.tipo
     }
+
 }

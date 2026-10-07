@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.dp
 import viewmodel.UsuarioViewModel
 
 @Composable
-fun ResumenScreen(viewModel: UsuarioViewModel){
+fun ResumenScreen2(viewModel: UsuarioViewModel){
         val estado by viewModel.estado.collectAsState()
 
     Column(Modifier.padding(10.dp)) {
-        Text("HOME ADMIN", style = MaterialTheme.typography.headlineMedium)
+        Text("HOME SUPERVISOR", style = MaterialTheme.typography.headlineMedium)
         Text("Correo: ${estado.correo}")
         Text("Contraseña: ${"*".repeat(estado.clave.length)}")
-        Text("Privilegios: ADMINISTRADOR")
+        Text("Privilegios: SUPERVISOR")
     }
 }

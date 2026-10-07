@@ -66,6 +66,8 @@ fun LoginScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
 
         ) {
+
+
             Text(
                 "Bienvenido",
                 fontSize = 30.sp,
@@ -114,9 +116,15 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    if (viewModel.validarInicioSesion() && viewModel.validarCredenciales()) {
+                    if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "admin") {
                         navController.navigate("resumen")
-                    }
+                    }else
+                        if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "supervisor") {
+                            navController.navigate("resumen2")
+                        } else
+                            if (viewModel.validarCredenciales() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "operador") {
+                                navController.navigate("resumen3")
+                            }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -125,3 +133,5 @@ fun LoginScreen(
         }
     }
 }
+
+private fun String.get(index: String) {}
