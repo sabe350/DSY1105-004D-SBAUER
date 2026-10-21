@@ -25,13 +25,13 @@ fun AppNavigation(){
             LoginScreen(navController, usuarioViewModel)
         }
         composable("resumen"){
-            ResumenScreen(usuarioViewModel)
+            ResumenScreen(usuarioViewModel, navController)
         }
         composable("resumen2"){
-            ResumenScreen2(usuarioViewModel)
+            ResumenScreen2(usuarioViewModel, navController)
         }
         composable("resumen3"){
-            ResumenScreen3(usuarioViewModel)
+            ResumenScreen3(usuarioViewModel, navController)
         }
     }
 }
