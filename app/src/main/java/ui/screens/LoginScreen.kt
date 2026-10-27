@@ -1,6 +1,7 @@
 package ui.screens
 
 import android.graphics.drawable.Icon
+import android.widget.EditText
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,6 +52,8 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+
+
 fun LoginScreen(
     navController: NavController,
     viewModel: UsuarioViewModel
