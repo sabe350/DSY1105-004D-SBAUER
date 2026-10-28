@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.update
 
 
 class UsuarioViewModel: ViewModel() {
+
     private val _estado = MutableStateFlow(UsuarioUiState())
 
     val estado: StateFlow<UsuarioUiState> = _estado
+
 
     fun onNombreChange(valor: String){
         _estado.update { it.copy(nombre = valor, errores = it.errores.copy(nombre = null)) }
@@ -98,6 +100,10 @@ class UsuarioViewModel: ViewModel() {
         _estado.update { it.copy(errores = errores) }
 
         return !hayErrores
+    }
+
+    fun logOut(){
+        _estado.value = UsuarioUiState()
     }
 
 }
