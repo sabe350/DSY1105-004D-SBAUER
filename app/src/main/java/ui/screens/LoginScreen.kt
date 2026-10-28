@@ -1,5 +1,6 @@
 package ui.screens
 
+import android.graphics.Outline
 import android.graphics.drawable.Icon
 import android.widget.EditText
 import androidx.compose.foundation.layout.Box
@@ -119,6 +120,7 @@ fun LoginScreen(
 
             Button(
                 onClick = {
+
                     if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "admin") {
                         navController.navigate("resumen")
                     }else
