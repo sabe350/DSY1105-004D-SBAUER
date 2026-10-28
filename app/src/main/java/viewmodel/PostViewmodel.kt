@@ -19,7 +19,7 @@ class PostViewmodel : ViewModel(){
 
     private fun fetchPost(){
         try{
-            _postList.value = repository.getPosts()
+           // _postList.value = repository.getPosts()
         }catch (e: Exception){
             println("Error al obtener datos: ${e.localizedMessage}")
         }
