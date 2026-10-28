@@ -109,4 +109,4 @@ fun RegistroScreen(
             Text("Registrar")
         }
     }
-}s
+}
