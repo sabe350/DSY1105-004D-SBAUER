@@ -73,7 +73,7 @@ fun LoginScreen(
 
 
             Text(
-                "Bienvenido",
+                "Iniciar Sesion",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center

@@ -11,6 +11,8 @@ import ui.screens.ResumenScreen
 import ui.screens.ResumenScreen2
 import ui.screens.ResumenScreen3
 import ui.screens.LoginScreen
+import ui.screens.SelectScreen
+import ui.screens.RegistroScreen
 import viewmodel.UsuarioViewModel
 
 @Composable
@@ -21,8 +23,14 @@ fun AppNavigation(){
 
     NavHost(
         navController = navController,
-        startDestination = "login",
+        startDestination = "select",
     ){
+        composable("select") {
+            SelectScreen(navController)
+        }
+        composable("register") {
+            RegistroScreen(navController, usuarioViewModel)
+        }
         composable("login") {
             LoginScreen(navController, usuarioViewModel)
         }

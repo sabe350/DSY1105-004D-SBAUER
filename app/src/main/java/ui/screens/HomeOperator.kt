@@ -28,7 +28,7 @@ fun ResumenScreen3(viewModel: UsuarioViewModel, navController: NavController){
         Button(
             onClick = {
                 viewModel.logOut()
-                navController.navigate("login"){popUpTo(navController.graph.id) {inclusive = true} }
+                navController.navigate("select"){popUpTo(navController.graph.id) {inclusive = true} }
             },
             modifier = Modifier.fillMaxWidth()
         ) {

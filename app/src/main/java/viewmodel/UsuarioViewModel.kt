@@ -34,6 +34,10 @@ class UsuarioViewModel: ViewModel() {
         _estado.update { it.copy(clave = valor, errores = it.errores.copy(clave = null)) }
     }
 
+    fun onClave2Change(valor: String){
+        _estado.update { it.copy(clave2 = valor, errores = it.errores.copy(clave = null)) }
+    }
+
 
 
     fun validarInicioSesion(): Boolean{
@@ -84,10 +88,11 @@ class UsuarioViewModel: ViewModel() {
     fun validarFomulario(): Boolean {
         val estadoActual = _estado.value
         val errores = UsuarioErrores(
-            nombre = if (estadoActual.nombre.isBlank()) "Campo Obligatorio" else null,
-            correo = if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
-            clave = if (estadoActual.clave.isBlank()) "Debe Rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else null,
-            direccion = if (estadoActual.direccion.isBlank()) "Campo Obligatorio" else null
+            nombre = if (estadoActual.nombre.isBlank()) "Debe rellenar este campo" else null,
+            correo = if (estadoActual.correo.isBlank()) "Debe rellenar este campo" else if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
+            clave = if (estadoActual.clave.isBlank()) "Debe rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else if (estadoActual.clave != estadoActual.clave2) "Contraseña no coincide" else null,
+            clave2 = if (estadoActual.clave.isBlank()) "Debe rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else if (estadoActual.clave2 != estadoActual.clave) "Contraseña no coincide" else null,
+            direccion = if (estadoActual.direccion.isBlank()) "Debe rellenar este campo" else null
         )
 
         val hayErrores = listOfNotNull(
@@ -103,6 +108,9 @@ class UsuarioViewModel: ViewModel() {
     }
 
     fun logOut(){
+        _estado.value = UsuarioUiState()
+    }
+    fun Regsitro(){
         _estado.value = UsuarioUiState()
     }
 
