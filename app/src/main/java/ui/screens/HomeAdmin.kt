@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import model.UsuarioUiState
 import viewmodel.UsuarioViewModel
 
 @Composable
@@ -26,7 +27,8 @@ fun ResumenScreen(viewModel: UsuarioViewModel, navController: NavController){
 
         Button(
             onClick = {
-                navController.navigate("login")
+                viewModel.logOut()
+                navController.navigate("login"){popUpTo(navController.graph.id) {inclusive = true} }
             },
             modifier = Modifier.fillMaxWidth()
         ) {

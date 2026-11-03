@@ -122,13 +122,13 @@ fun LoginScreen(
                 onClick = {
 
                     if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "admin") {
-                        navController.navigate("resumen")
+                        navController.navigate("resumen"){popUpTo("login"){inclusive = true } }
                     }else
                         if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "supervisor") {
-                            navController.navigate("resumen2")
+                            navController.navigate("resumen2"){popUpTo("login"){inclusive = true } }
                         } else
                             if (viewModel.validarCredenciales() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "operador") {
-                                navController.navigate("resumen3")
+                                navController.navigate("resumen3"){popUpTo("login"){inclusive = true } }
                             }
                 },
                 modifier = Modifier.fillMaxWidth()
