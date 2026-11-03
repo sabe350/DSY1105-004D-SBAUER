@@ -169,5 +169,7 @@ fun RegistroScreen(
         ) {
             Text("Registrarse")
         }
+
+
     }
 }
