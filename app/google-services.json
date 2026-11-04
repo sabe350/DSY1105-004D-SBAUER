@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "849718066612",
+    "project_id": "insertcode",
+    "storage_bucket": "insertcode.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849718066612:android:4401952c7fbe0c61f3c6e1",
+        "android_client_info": {
+          "package_name": "com.grupox.InsertCode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn9cepDysXzzzMq33CU0vBCaL0gNEyONg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

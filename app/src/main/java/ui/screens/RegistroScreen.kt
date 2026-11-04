@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Divider
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.foundation.layout.Box
 import viewmodel.UsuarioViewModel
 
 @Composable
@@ -44,10 +47,11 @@ fun RegistroScreen(
     var isPassword2Visible by remember { mutableStateOf(false) }
     val estado by viewModel.estado.collectAsState()
 
+    Box(Modifier.fillMaxSize()){
     Column(
         Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .align(Alignment.Center)
+            .padding(36.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
@@ -57,18 +61,6 @@ fun RegistroScreen(
             textAlign = TextAlign.Center
         )
 
-        OutlinedTextField(
-            value = estado.nombre,
-            onValueChange = viewModel::onNombreChange,
-            label = { Text(text = "Nombre")},
-            isError = estado.errores.nombre != null,
-            supportingText = {
-                estado.errores.nombre?.let{
-                    Text(text=it, color = MaterialTheme.colorScheme.error)
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
 
         OutlinedTextField(
             value = estado.correo,
@@ -136,27 +128,14 @@ fun RegistroScreen(
         )
 
 
-        OutlinedTextField(
-            value = estado.direccion,
-            onValueChange = viewModel::onDireccionChange,
-            label = { Text(text = "Direccion")},
-            isError = estado.errores.direccion != null,
-            supportingText = {
-                estado.errores.direccion?.let{
-                    Text(text=it, color = MaterialTheme.colorScheme.error)
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
         Row(verticalAlignment = Alignment.CenterVertically){
             Checkbox(
                 checked = estado.aceptaTerminos,
                 onCheckedChange = viewModel::onAceptarTerminosChange
             )
-            Spacer(Modifier.width(8.dp))
-            Text("Acepto los terminos y condiciones")
-        }
+             Spacer(Modifier.width(8.dp))
+             Text("Acepto los terminos y condiciones")
+         }
 
         Button(
             onClick = {
@@ -170,6 +149,12 @@ fun RegistroScreen(
             Text("Registrarse")
         }
 
+        Row(){
+            HorizontalDivider()
+        }
+
+
+
 
     }
-}
+}}

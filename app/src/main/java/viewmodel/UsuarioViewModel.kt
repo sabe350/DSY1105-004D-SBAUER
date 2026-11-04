@@ -15,16 +15,10 @@ class UsuarioViewModel: ViewModel() {
     val estado: StateFlow<UsuarioUiState> = _estado
 
 
-    fun onNombreChange(valor: String){
-        _estado.update { it.copy(nombre = valor, errores = it.errores.copy(nombre = null)) }
-    }
     fun onCorreoChange(valor: String){
         _estado.update { it.copy(correo = valor, errores = it.errores.copy(correo = null)) }
     }
 
-    fun onDireccionChange(valor: String){
-        _estado.update { it.copy(direccion = valor, errores = it.errores.copy(direccion = null)) }
-    }
 
     fun onAceptarTerminosChange(valor: Boolean){
         _estado.update { it.copy(aceptaTerminos = valor) }
@@ -88,18 +82,14 @@ class UsuarioViewModel: ViewModel() {
     fun validarFomulario(): Boolean {
         val estadoActual = _estado.value
         val errores = UsuarioErrores(
-            nombre = if (estadoActual.nombre.isBlank()) "Debe rellenar este campo" else null,
             correo = if (estadoActual.correo.isBlank()) "Debe rellenar este campo" else if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
             clave = if (estadoActual.clave.isBlank()) "Debe rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else if (estadoActual.clave != estadoActual.clave2) "Contraseña no coincide" else null,
             clave2 = if (estadoActual.clave.isBlank()) "Debe rellenar este campo" else if (estadoActual.clave.length < 6) "Debe tener al menos 6 caracteres" else if (estadoActual.clave2 != estadoActual.clave) "Contraseña no coincide" else null,
-            direccion = if (estadoActual.direccion.isBlank()) "Debe rellenar este campo" else null
         )
 
         val hayErrores = listOfNotNull(
-            errores.nombre,
             errores.correo,
             errores.clave,
-            errores.direccion
         ).isNotEmpty()
 
         _estado.update { it.copy(errores = errores) }
