@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("com.firebaseui:firebase-ui-auth:9.0.0")
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.12.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.12.1")
