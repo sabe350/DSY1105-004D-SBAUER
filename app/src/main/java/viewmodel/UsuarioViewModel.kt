@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 
 class UsuarioViewModel: ViewModel() {
 
+
     private val _estado = MutableStateFlow(UsuarioUiState())
 
     val estado: StateFlow<UsuarioUiState> = _estado
