@@ -1,29 +1,18 @@
 package ui.screens
 
-import android.graphics.Outline
-import android.graphics.drawable.Icon
-import android.widget.EditText
-import androidx.compose.foundation.gestures.draggable
+import LoginState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFrom
-import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,63 +26,47 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import viewmodel.UsuarioViewModel
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.text.googlefonts.Font
-import androidx.credentials.Credential
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
 import com.example.InsertCode.R
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-
-val googleIdOption = GetGoogleIdOption.Builder()
-    .setServerClientId(getString(com.firebase.ui.auth.R.string.default_web_client_id))
-    .setFilterByAuthorizedAccounts(true)
-    .build()
-
-var request = GetCredentialRequest.Builder()
-    .addCredentialOption(googleIdOption)
-    .build()
-
-private fun handleSignIn(credential: Credential){
-    if (credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL){
-        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-        firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
-    }else{
-        Log.w(TAG, "Credential is not of type Google ID")
-    }
-}
+import viewmodel.LoginViewmodel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
+
 fun LoginScreen(
     navController: NavController,
-    viewModel: UsuarioViewModel
+    viewModel: UsuarioViewModel,
+    loginViewmodel: LoginViewmodel
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val estado by viewModel.estado.collectAsState()
+    val loginState: LoginState by loginViewmodel.loginState.collectAsState()
+    val errorMessage: String? = loginState.errorMessage
+    val context = LocalContext.current
     var robotoFontFamily = FontFamily(
         Font(R.font.roboto_medium, FontWeight.Medium)
     )
 
+    LaunchedEffect((loginState.loginStateType)) {
+        if (loginState.loginStateType == LoginState.LoginStateType.LOGGED_IN) {
+            navController.navigate("resumen") {
+                popUpTo("login") { inclusive = true }
+            }
+        }
+    }
 
     Box(Modifier.fillMaxSize()) {
         Column(
@@ -153,32 +126,49 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-
-                    if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "admin") {
-                        navController.navigate("resumen"){popUpTo("login"){inclusive = true } }
-                    }else
-                        if (viewModel.validarInicioSesion() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "supervisor") {
-                            navController.navigate("resumen2"){popUpTo("login"){inclusive = true } }
-                        } else
-                            if (viewModel.validarCredenciales() && viewModel.validarCredenciales() && viewModel.tipoInicio() == "operador") {
-                                navController.navigate("resumen3"){popUpTo("login"){inclusive = true } }
+                    viewModel.validarCredenciales { tipo ->
+                        val destino = when (tipo) {
+                            "admin" -> "resumen"
+                            "supervisor" -> "resumen2"
+                            "operador" -> "resumen3"
+                            else -> "resumen"
+                        }
+                        destino?.let {
+                            navController.navigate(it) {
+                                popUpTo("login") { inclusive = true }
                             }
+                        }
+                    }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Iniciar Sesion")
             }
 
-            Row(){
+            Row() {
                 HorizontalDivider()
             }
 
-            Button(onClick = {null}, modifier = Modifier.fillMaxWidth()) {
-                Text("Acceder con Google", fontFamily = robotoFontFamily, modifier = Modifier
-                    .padding(16.dp))
+            Button(
+                onClick = {
+                    loginViewmodel.login(context)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    "Acceder con Google",
+                    fontFamily = robotoFontFamily,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+
+            if (loginState.loginStateType == LoginState.LoginStateType.ERROR) {
+                Text(
+                    loginState.errorMessage ?: "Error al iniciar sesión",
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
     }
-}
 
-private fun String.get(index: String) {}
+}

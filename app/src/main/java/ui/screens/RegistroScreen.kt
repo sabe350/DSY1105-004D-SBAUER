@@ -1,5 +1,8 @@
 package ui.screens
 
+import android.app.AlertDialog
+import android.app.AlertDialog.Builder
+import androidx.collection.buildFloatSet
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,125 +39,142 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material.AlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import viewmodel.UsuarioViewModel
 
+
 @Composable
+
 fun RegistroScreen(
     navController: NavController,
     viewModel: UsuarioViewModel
-){
+) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     var isPassword2Visible by remember { mutableStateOf(false) }
     val estado by viewModel.estado.collectAsState()
 
-    Box(Modifier.fillMaxSize()){
-    Column(
-        Modifier
-            .align(Alignment.Center)
-            .padding(36.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(
-            "Registrarse",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-
-
-        OutlinedTextField(
-            value = estado.correo,
-            onValueChange = viewModel::onCorreoChange,
-            label = { Text(text = "Correo")},
-            isError = estado.errores.correo != null,
-            supportingText = {
-                estado.errores.correo?.let{
-                    Text(text=it, color = MaterialTheme.colorScheme.error)
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = estado.clave,
-            onValueChange = viewModel::onClaveChange,
-            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            label = { Text(text = "Contraseña") },
-            isError = estado.errores.clave != null,
-            supportingText = {
-                estado.errores.clave?.let {
-                    Text(text = it, color = MaterialTheme.colorScheme.error)
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            trailingIcon = {
-                val icon =
-                    if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
-                val descripcion =
-                    if (isPasswordVisible) "Ocultar Contraseña" else "Mostar Constaseña"
-                IconButton({ isPasswordVisible = !isPasswordVisible }) {
-                    androidx.compose.material.Icon(
-                        imageVector = icon,
-                        contentDescription = descripcion
-                    )
-                }
-            }
-        )
-
-        OutlinedTextField(
-            value = estado.clave2,
-            onValueChange = viewModel::onClave2Change,
-            visualTransformation = if (isPassword2Visible) VisualTransformation.None else PasswordVisualTransformation(),
-            label = { Text(text = "Repetir Contraseña") },
-            isError = estado.errores.clave2 != null,
-            supportingText = {
-                estado.errores.clave2?.let {
-                    Text(text = it, color = MaterialTheme.colorScheme.error)
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            trailingIcon = {
-                val icon =
-                    if (isPassword2Visible) Icons.Default.VisibilityOff else Icons.Default.Visibility
-                val descripcion =
-                    if (isPassword2Visible) "Ocultar Contraseña" else "Mostar Constaseña"
-                IconButton({ isPassword2Visible = !isPassword2Visible }) {
-                    androidx.compose.material.Icon(
-                        imageVector = icon,
-                        contentDescription = descripcion
-                    )
-                }
-            }
-        )
-
-
-        Row(verticalAlignment = Alignment.CenterVertically){
-            Checkbox(
-                checked = estado.aceptaTerminos,
-                onCheckedChange = viewModel::onAceptarTerminosChange
-            )
-             Spacer(Modifier.width(8.dp))
-             Text("Acepto los terminos y condiciones")
-         }
-
-        Button(
-            onClick = {
-                if (viewModel.validarFomulario()){
-                    viewModel.Regsitro()
-                    navController.navigate("select"){popUpTo(navController.graph.id) {inclusive = true} }
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            Modifier
+                .align(Alignment.Center)
+                .padding(36.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text("Registrarse")
+            Text(
+                "Registrarse",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+
+
+            OutlinedTextField(
+                value = estado.correo,
+                onValueChange = viewModel::onCorreoChange,
+                label = { Text(text = "Correo") },
+                isError = estado.errores.correo != null,
+                supportingText = {
+                    estado.errores.correo?.let {
+                        Text(text = it, color = MaterialTheme.colorScheme.error)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = estado.clave,
+                onValueChange = viewModel::onClaveChange,
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                label = { Text(text = "Contraseña") },
+                isError = estado.errores.clave != null,
+                supportingText = {
+                    estado.errores.clave?.let {
+                        Text(text = it, color = MaterialTheme.colorScheme.error)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                trailingIcon = {
+                    val icon =
+                        if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
+                    val descripcion =
+                        if (isPasswordVisible) "Ocultar Contraseña" else "Mostar Constaseña"
+                    IconButton({ isPasswordVisible = !isPasswordVisible }) {
+                        androidx.compose.material.Icon(
+                            imageVector = icon,
+                            contentDescription = descripcion
+                        )
+                    }
+                }
+            )
+
+            OutlinedTextField(
+                value = estado.clave2,
+                onValueChange = viewModel::onClave2Change,
+                visualTransformation = if (isPassword2Visible) VisualTransformation.None else PasswordVisualTransformation(),
+                label = { Text(text = "Repetir Contraseña") },
+                isError = estado.errores.clave2 != null,
+                supportingText = {
+                    estado.errores.clave2?.let {
+                        Text(text = it, color = MaterialTheme.colorScheme.error)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                trailingIcon = {
+                    val icon =
+                        if (isPassword2Visible) Icons.Default.VisibilityOff else Icons.Default.Visibility
+                    val descripcion =
+                        if (isPassword2Visible) "Ocultar Contraseña" else "Mostar Constaseña"
+                    IconButton({ isPassword2Visible = !isPassword2Visible }) {
+                        androidx.compose.material.Icon(
+                            imageVector = icon,
+                            contentDescription = descripcion
+                        )
+                    }
+                }
+            )
+
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = estado.aceptaTerminos,
+                    onCheckedChange = viewModel::onAceptarTerminosChange
+                )
+                Spacer(Modifier.width(8.dp))
+                Text("Acepto los terminos y condiciones")
+            }
+
+            Button(
+                onClick = {
+                    if (viewModel.validarFomulario()) {
+                        FirebaseAuth.getInstance()
+                            .createUserWithEmailAndPassword(
+                                estado.correo.toString(),
+                                estado.clave.toString()
+                            ).addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    viewModel.Regsitro()
+                                    navController.navigate("select") {
+                                        popUpTo(navController.graph.id) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    null
+                                }
+                            }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Registrarse")
+            }
+
+            Row() {
+                HorizontalDivider()
+            }
+
+
         }
-
-        Row(){
-            HorizontalDivider()
-        }
-
-
-
-
     }
-}}
+}

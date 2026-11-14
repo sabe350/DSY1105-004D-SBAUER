@@ -3,6 +3,7 @@ package viewmodel
 import model.UsuarioErrores
 import model.UsuarioUiState
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -52,32 +53,37 @@ class UsuarioViewModel: ViewModel() {
         return !hayErrores
     }
 
-    fun validarCredenciales(): Boolean{
+    fun validarCredenciales(onExito: (String) -> Unit) {
+        if (!validarInicioSesion()) return
+
         val estadoActual = _estado.value
-        val errores = UsuarioErrores(
-            correo = if (estadoActual.correo == "admin@guardian.net" || estadoActual.correo == "supervisor@guardian.net" || estadoActual.correo == "operador@guardian.net") null else "Credenciales invalidas",
-            clave = if (estadoActual.clave != "123456") "Credenciales invalidas" else null
-        )
 
-        val hayErrores = listOfNotNull(
-            errores.correo,
-            errores.clave
-        ).isNotEmpty()
-
-        _estado.update {  it.copy(errores = errores) }
-
-        return !hayErrores
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(estadoActual.correo.toString(), estadoActual.clave.toString())
+            .addOnCompleteListener { tarea ->
+                if (tarea.isSuccessful){
+                    _estado.update { it.copy(errores = UsuarioErrores(correo = null, clave = null)) }
+                    onExito(tipoInicio())
+                }else
+                    _estado.update {
+                        it.copy(
+                            errores = UsuarioErrores(
+                                correo = "Credenciales invalidas",
+                                clave = "Credenciales invalidas"
+                            )
+                        )
+                    }
+            }
     }
 
     fun tipoInicio(): String{
-        val estadoActual = _estado.value
-        val tipoUser = UsuarioUiState(
-            tipo = (if (estadoActual.correo == "admin@guardian.net") "admin" else
-                if (estadoActual.correo == "supervisor@guardian.net") "supervisor" else
-                    if (estadoActual.correo == "operador@guardian.net") "operador" else null).toString()
-        )
+        return  when (_estado.value.correo){
+            "admin@guardian.net" -> "admin"
+            "supervisor@guardian.net" -> "supervisor"
+            "operador@guardian.net" -> "operador"
+            else -> "admin"
+        }
 
-        return tipoUser.tipo
     }
 
     fun validarFomulario(): Boolean {

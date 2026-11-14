@@ -7,6 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import ui.screens.ResumenScreen
 import ui.screens.ResumenScreen2
 import ui.screens.ResumenScreen3
@@ -14,12 +16,14 @@ import ui.screens.LoginScreen
 import ui.screens.SelectScreen
 import ui.screens.RegistroScreen
 import viewmodel.UsuarioViewModel
+import viewmodel.LoginViewmodel
 
 @Composable
 fun AppNavigation(){
     val navController = rememberNavController()
 
     val usuarioViewModel: UsuarioViewModel = viewModel()
+    val loginViewmodel: LoginViewmodel = viewModel()
 
     NavHost(
         navController = navController,
@@ -32,10 +36,10 @@ fun AppNavigation(){
             RegistroScreen(navController, usuarioViewModel)
         }
         composable("login") {
-            LoginScreen(navController, usuarioViewModel)
+            LoginScreen(navController, usuarioViewModel, loginViewmodel)
         }
         composable("resumen"){
-            ResumenScreen(usuarioViewModel, navController)
+            ResumenScreen(usuarioViewModel, navController, loginViewmodel)
         }
         composable("resumen2"){
             ResumenScreen2(usuarioViewModel, navController)

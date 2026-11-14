@@ -12,7 +12,20 @@
           "package_name": "com.grupox.InsertCode"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "849718066612-svufodbhnqkkp1vhh3h9l34t32r623to.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupox.InsertCode",
+            "certificate_hash": "383304a09ca8601b984e27dda8a9d95a580094c5"
+          }
+        },
+        {
+          "client_id": "849718066612-uctb4r8v5ih37936n9dcmht0hm1b5oec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCn9cepDysXzzzMq33CU0vBCaL0gNEyONg"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849718066612-uctb4r8v5ih37936n9dcmht0hm1b5oec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
