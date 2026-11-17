@@ -1,6 +1,7 @@
 package ui.screens
 
 import LoginState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
@@ -166,16 +168,13 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(Color.White)
             ) {
-                Icon(
-                    painterResource(R.drawable.theme_neutral__show_text_no__shape_pill__platform_android_web),
-                    contentDescription = "TEST"
-                )
-                Text(
-                    "Acceder con Google",
-                    fontFamily = robotoFontFamily,
-                    modifier = Modifier.padding(16.dp)
+                Image(
+                    painterResource(R.drawable.googlelogo),
+                    contentDescription = ""
 
                 )
+                Text("Acceder con Google",
+                    modifier = Modifier.padding(horizontal = 12.dp))
             }
 
             if (loginState.loginStateType == LoginState.LoginStateType.ERROR) {

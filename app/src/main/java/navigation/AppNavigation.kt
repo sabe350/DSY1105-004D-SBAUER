@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import ui.Screen
+import ui.screens.AlertScreen
 import ui.screens.ResumenScreen2
 import ui.screens.ResumenScreen3
 import ui.screens.HomeScreenAdmin
@@ -58,6 +59,9 @@ fun AppNavigation() {
             }
             composable(Screen.Routes.rout) {
                 RouteScreen(usuarioViewModel, navController, loginViewmodel)
+            }
+            composable(Screen.Alert.rout) {
+                AlertScreen(usuarioViewModel, navController, loginViewmodel)
             }
         }
     }

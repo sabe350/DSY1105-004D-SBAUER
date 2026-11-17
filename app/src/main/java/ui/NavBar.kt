@@ -30,12 +30,7 @@ fun BottomNavBar(
             route = Screen.Home.rout
         ),
         NavigationItem(
-            title = "Perfil",
-            icon = Icons.Default.Person,
-            route = Screen.Profile.rout
-        ),
-        NavigationItem(
-            title = "Envios",
+            title = "Pedidos",
             icon = Icons.Default.Outbox,
             route = Screen.Shipping.rout
         ),
@@ -44,6 +39,16 @@ fun BottomNavBar(
             icon = Icons.Default.DirectionsCarFilled,
             route = Screen.Routes.rout
         ),
+        NavigationItem(
+            title = "Alertas",
+            icon = Icons.Default.AddAlert,
+            route = Screen.Alert.rout
+        ),
+        NavigationItem(
+            title = "Perfil",
+            icon = Icons.Default.Person,
+            route = Screen.Profile.rout
+        ),
     )
 
     NavigationBar() {
@@ -51,7 +56,7 @@ fun BottomNavBar(
             NavigationBarItem(
                 selected = selectedNavigationIndex.intValue == index,
                 onClick = {
-                    selectedNavigationIndex.intValue == index
+                    selectedNavigationIndex.intValue = index
                     navController.navigate(item.route)
                 },
                 icon = {

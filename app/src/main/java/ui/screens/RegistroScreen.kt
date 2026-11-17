@@ -170,12 +170,6 @@ fun RegistroScreen(
             ) {
                 Text("Registrarse")
             }
-
-            Row() {
-                HorizontalDivider()
-            }
-
-
         }
     }
 }

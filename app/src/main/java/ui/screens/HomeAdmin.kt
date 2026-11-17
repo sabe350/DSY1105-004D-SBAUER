@@ -78,7 +78,6 @@ fun HomeScreenAdmin(viewModel: UsuarioViewModel, navController: NavController){
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         )   {
-            TopAppBar(title = {Text("Usuarios")})
             Row(Modifier
                 .border(0.5.dp, Color.LightGray, CircleShape)
                 .padding(horizontal = 10.dp, vertical = 10.dp),
