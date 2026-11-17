@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
+import ui.Screen
 import viewmodel.UsuarioViewModel
 
 
@@ -154,7 +155,7 @@ fun RegistroScreen(
                             ).addOnCompleteListener {
                                 if (it.isSuccessful) {
                                     viewModel.Regsitro()
-                                    navController.navigate("select") {
+                                    navController.navigate(Screen.Select.rout) {
                                         popUpTo(navController.graph.id) {
                                             inclusive = true
                                         }

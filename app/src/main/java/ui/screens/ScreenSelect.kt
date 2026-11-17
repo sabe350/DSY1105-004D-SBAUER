@@ -49,6 +49,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import ui.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,7 +77,7 @@ fun SelectScreen(
 
                 Button(
                     onClick = {
-                        navController.navigate("login")
+                        navController.navigate(Screen.Login.rout)
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -85,7 +86,7 @@ fun SelectScreen(
 
                 Button(
                     onClick = {
-                        navController.navigate("register")
+                        navController.navigate(Screen.Register.rout)
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -28,17 +29,26 @@ import androidx.navigation.NavController
 import viewmodel.UsuarioViewModel
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.graphics.drawable.toDrawable
 import com.example.InsertCode.R
+import ui.Screen
 import viewmodel.LoginViewmodel
 
 
@@ -62,8 +72,8 @@ fun LoginScreen(
 
     LaunchedEffect((loginState.loginStateType)) {
         if (loginState.loginStateType == LoginState.LoginStateType.LOGGED_IN) {
-            navController.navigate("resumen") {
-                popUpTo("login") { inclusive = true }
+            navController.navigate(Screen.Home.rout) {
+                popUpTo(Screen.Login.rout) { inclusive = true }
             }
         }
     }
@@ -128,14 +138,14 @@ fun LoginScreen(
                 onClick = {
                     viewModel.validarCredenciales { tipo ->
                         val destino = when (tipo) {
-                            "admin" -> "resumen"
+                            "admin" -> Screen.Home.rout
                             "supervisor" -> "resumen2"
                             "operador" -> "resumen3"
-                            else -> "resumen"
+                            else -> Screen.Home.rout
                         }
                         destino?.let {
                             navController.navigate(it) {
-                                popUpTo("login") { inclusive = true }
+                                popUpTo(Screen.Login.rout) { inclusive = true }
                             }
                         }
                     }
@@ -153,12 +163,18 @@ fun LoginScreen(
                 onClick = {
                     loginViewmodel.login(context)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(Color.White)
             ) {
+                Icon(
+                    painterResource(R.drawable.theme_neutral__show_text_no__shape_pill__platform_android_web),
+                    contentDescription = "TEST"
+                )
                 Text(
                     "Acceder con Google",
                     fontFamily = robotoFontFamily,
                     modifier = Modifier.padding(16.dp)
+
                 )
             }
 
@@ -172,3 +188,5 @@ fun LoginScreen(
     }
 
 }
+
+

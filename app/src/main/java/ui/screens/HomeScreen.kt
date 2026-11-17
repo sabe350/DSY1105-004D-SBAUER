@@ -11,14 +11,19 @@ import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
+import androidx.navigation.compose.rememberNavController
+import ui.BottomNavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(){
+    val navController = rememberNavController()
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("TEST") })
-        }
+        },
+        bottomBar = { BottomNavBar(navController) }
     )   { innerPadding ->
             Column(
                 modifier = Modifier
