@@ -9,20 +9,19 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavBar(
     navController: NavController
 ){
-    val selectedNavigationIndex = rememberSaveable {
-        mutableIntStateOf(0)
-    }
-
     val navigationItems = listOf(
         NavigationItem(
             title = "Inicio",
@@ -51,13 +50,24 @@ fun BottomNavBar(
         ),
     )
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     NavigationBar() {
-        navigationItems.forEachIndexed { index, item ->
+        navigationItems.forEach{ item ->
+
+            val isSelected = currentRoute == item.route
+
             NavigationBarItem(
-                selected = selectedNavigationIndex.intValue == index,
+                selected = isSelected,
                 onClick = {
-                    selectedNavigationIndex.intValue = index
-                    navController.navigate(item.route)
+                    navController.navigate(item.route){
+                        popUpTo(navController.graph.findStartDestination().id){
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 icon = {
                     Icon(imageVector = item.icon, contentDescription = item.title)
@@ -65,7 +75,7 @@ fun BottomNavBar(
                 label = {
                     Text(
                         item.title,
-                        color = if (index == selectedNavigationIndex.intValue)
+                        color = if (isSelected)
                             Color.White
                         else Color.Gray
                     )

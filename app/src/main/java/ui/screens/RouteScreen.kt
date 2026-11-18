@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -44,9 +45,9 @@ data class DropdownItemRoute(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGridApi::class)
 @Composable
-fun RouteScreen(viewModel: UsuarioViewModel, navController: NavController, loginViewModel: LoginViewmodel){
+fun RouteScreen(viewModel: UsuarioViewModel, navController: NavController, loginViewModel: LoginViewmodel) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedItem by remember {mutableStateOf(DropdownItemRoute("En Espera"))}
+    var selectedItem by remember { mutableStateOf(DropdownItemRoute("En Espera")) }
     val itemList = listOf(
         DropdownItemRoute("En Transito"),
         DropdownItemRoute("Recibido"),
@@ -64,84 +65,87 @@ fun RouteScreen(viewModel: UsuarioViewModel, navController: NavController, login
         bottomBar = { BottomNavBar(navController) }
     )
     { innerPadding ->
-        Box() {
-            Column(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(innerPadding)
-                    .border(0.5.dp, Color.LightGray),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Box(
+        Box(Modifier.padding(horizontal = 50.dp, vertical = 10.dp)) {
+            Card(Modifier.padding(innerPadding)) {
+                Column(
                     modifier = Modifier
-                        .padding(vertical = 10.dp)
+                        .border(1.dp, Color.Unspecified, RoundedCornerShape(12.dp)),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painterResource(R.drawable.mapa),
-                        contentDescription = null,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                Box() {
-                    Text("Pedido 1")
-                }
-                Box() {
-                    Text("Central -> Calle Falsa 123")
-                }
-                Box() {
-                    ExposedDropdownMenuBox(
+                    Box(
                         modifier = Modifier
-                            .padding(horizontal = 20.dp, vertical = 0.dp)
-                            .clip(RoundedCornerShape(10.dp)),
-                        expanded = expanded,
-                        onExpandedChange = {
-                            expanded = !expanded
-                        }
+                            .padding(vertical = 10.dp)
                     ) {
-                        Row(
-
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            TextField(
-                                modifier = Modifier
-                                    .menuAnchor(),
-                                value = selectedItem.title,
-                                onValueChange = { },
-                                readOnly = true,
-                                trailingIcon = {
-                                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                                }
-                            )
-                        }
-
-                        ExposedDropdownMenu(
+                        Image(
+                            painterResource(R.drawable.mapa),
+                            contentDescription = null,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    Box() {
+                        Text("Pedido 1")
+                    }
+                    Box() {
+                        Text("Central -> Calle Falsa 123")
+                    }
+                    Box(Modifier.border(1.dp, Color.Unspecified)) {
+                        ExposedDropdownMenuBox(
+                            modifier = Modifier
+                                .padding(horizontal = 20.dp, vertical = 10.dp)
+                                .clip(RoundedCornerShape(10.dp)),
                             expanded = expanded,
-                            onDismissRequest = {
-                                expanded = false
+                            onExpandedChange = {
+                                expanded = !expanded
                             }
                         ) {
-                            itemList.forEachIndexed { index, item ->
-                                DropdownMenuItem(
-                                    text = {
-                                        Row(
-                                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Text(item.title)
-                                        }
-                                    },
-                                    onClick = {
-                                        selectedItem = itemList[index]
-                                        expanded = false
-                                    },
-                                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                            Row(
+
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                TextField(
+                                    modifier = Modifier
+                                        .menuAnchor(),
+                                    value = selectedItem.title,
+                                    onValueChange = { },
+                                    readOnly = true,
+                                    trailingIcon = {
+                                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                                    }
                                 )
                             }
-                        }
 
+                            ExposedDropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = {
+                                    expanded = false
+                                },
+
+                                ) {
+                                itemList.forEachIndexed { index, item ->
+                                    DropdownMenuItem(
+                                        text = {
+                                            Row(
+                                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                Text(item.title)
+                                            }
+                                        },
+                                        onClick = {
+                                            selectedItem = itemList[index]
+                                            expanded = false
+                                        },
+                                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                                    )
+                                }
+                            }
+
+                        }
                     }
                 }
             }
-            }
         }
     }
+}
+
+

@@ -6,12 +6,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.createGraph
 import ui.Screen
 import ui.screens.AlertScreen
+import ui.screens.HomeScreen
 import ui.screens.ResumenScreen2
 import ui.screens.ResumenScreen3
-import ui.screens.HomeScreenAdmin
 import ui.screens.LoginScreen
 import ui.screens.ProfileScreen
 import ui.screens.SelectScreen
@@ -43,7 +42,7 @@ fun AppNavigation() {
                 LoginScreen(navController, usuarioViewModel, loginViewmodel)
             }
             composable(Screen.Home.rout) {
-                HomeScreenAdmin(usuarioViewModel, navController)
+                HomeScreen(usuarioViewModel, navController)
             }
             composable("resumen2") {
                 ResumenScreen2(usuarioViewModel, navController)
@@ -55,13 +54,13 @@ fun AppNavigation() {
                 ProfileScreen(usuarioViewModel, navController, loginViewmodel)
             }
             composable(Screen.Shipping.rout) {
-                ShippingScreen(usuarioViewModel, navController, loginViewmodel)
+                ShippingScreen(usuarioViewModel, navController)
             }
             composable(Screen.Routes.rout) {
                 RouteScreen(usuarioViewModel, navController, loginViewmodel)
             }
             composable(Screen.Alert.rout) {
-                AlertScreen(usuarioViewModel, navController, loginViewmodel)
+                AlertScreen(usuarioViewModel, navController, loginViewmodel,)
             }
         }
     }

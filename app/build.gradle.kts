@@ -42,6 +42,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.10.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.11.0")
+    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.material3)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
