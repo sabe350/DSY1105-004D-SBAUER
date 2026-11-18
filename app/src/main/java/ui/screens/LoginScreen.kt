@@ -141,8 +141,8 @@ fun LoginScreen(
                     viewModel.validarCredenciales { tipo ->
                         val destino = when (tipo) {
                             "admin" -> Screen.Home.rout
-                            "supervisor" -> "resumen2"
-                            "operador" -> "resumen3"
+                            "supervisor" -> Screen.Home.rout
+                            "operador" -> Screen.Home.rout
                             else -> Screen.Home.rout
                         }
                         destino?.let {
