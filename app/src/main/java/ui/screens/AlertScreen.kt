@@ -86,7 +86,7 @@ fun AlertScreen(
 }
 @Composable
 private fun AlertCard(titulo: String, descripcion: String){
-    Card(modifier = Modifier.padding(16.dp).fillMaxWidth()){
+    Card(modifier = Modifier.padding(8.dp).fillMaxWidth()){
         Row(modifier = Modifier.padding(16.dp).fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
             Icon(

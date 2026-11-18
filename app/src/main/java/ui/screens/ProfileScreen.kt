@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -83,14 +84,16 @@ fun ProfileScreen(viewModel: UsuarioViewModel, navController: NavController, log
                             loginViewModel.logOut()
                             navController.navigate(Screen.Select.rout){popUpTo(navController.graph.id) {inclusive = true} }
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.width(200.dp).padding(10.dp)
                     ) {
                         Text("Cerrar Sesion")
                     }
                 }
+                }
             }
+
         }
     }
-}
+
 
 

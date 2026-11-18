@@ -11,10 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Details
+import androidx.compose.material.icons.filled.DirectionsCarFilled
+import androidx.compose.material.icons.filled.Outbox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -69,37 +72,54 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)   // una sola vez
+                .padding(innerPadding)
                 .padding(16.dp)
         ) {
-            ResumenPedidosCard(
+            ResumenPedidos(
                 enviados = 1,
-                pendientes = 1
+                pendientes = 1,
+                recibidos = 1
+            )
+            ResumenAlertas(
+                cant = 3
             )
         }
     }
 }
 
 @Composable
-fun ResumenPedidosCard(
+fun ResumenPedidos(
     enviados: Int,
     pendientes: Int,
+    recibidos: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(8.dp),
         shape = RoundedCornerShape(32.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+
     ) {
+        Text("Resumen del dia", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(horizontal = 25.dp), fontSize = 7.em)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 24.dp, horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
         ) {
-            ContadorPedidos(titulo = "Pedidos enviados", valor = enviados)
-            ContadorPedidos(titulo = "Pedidos en transito", valor = pendientes)
+            Icon(
+                imageVector = Icons.Default.Outbox,
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
+            ContadorPedidos(titulo = "Enviados", valor = enviados)
+            Icon(
+                imageVector = Icons.Default.DirectionsCarFilled,
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
+            ContadorPedidos(titulo = "En transito", valor = pendientes)
+            ContadorPedidos(titulo = "Recibidos", valor = recibidos)
         }
     }
 }
@@ -117,5 +137,45 @@ private fun ContadorPedidos(titulo: String, valor: Int) {
     }
 }
 
+@Composable
+private fun ContadorAlertas(titulo: String, valor: Int) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = titulo,
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            text = valor.toString(),
+        )
+    }
+}
 
+@Composable
+fun ResumenAlertas(
+    cant : Int,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier.fillMaxWidth().padding(8.dp),
+        shape = RoundedCornerShape(32.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 24.dp, horizontal = 12.dp),
+
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(Modifier.width(15.dp))
+            Icon(
+                imageVector = Icons.Default.Details,
+                contentDescription = null,
+                modifier = Modifier.size(40.dp)
+            )
+            Spacer(Modifier.width(15.dp))
+            ContadorAlertas(titulo = "Alertas pendientes:", valor = cant)
+        }
+    }
+}
 

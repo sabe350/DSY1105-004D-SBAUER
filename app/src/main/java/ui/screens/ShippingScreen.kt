@@ -85,12 +85,25 @@ fun ShippingScreen(
         ) {
             items(1) { index ->
                 PedidoCard(
-                    titulo = "Pedido ${index + 1}",
+                    titulo = "Pedido 1",
+                    estado = "En Espera",
+                    cliente = "Cliente 1",
+                    producto = "Producto 1",
+                    cantidad = "25 Unidades"
+                )
+                PedidoCard(
+                    titulo = "Pedido 2",
                     estado = "En Transito",
                     cliente = "Cliente 1",
                     producto = "Producto 1",
-                    cantidad = "25 Unidades",
-                    prioridadInicial = "Media"
+                    cantidad = "25 Unidades"
+                )
+                PedidoCard(
+                    titulo = "Pedido 3",
+                        estado = "Recibido",
+                    cliente = "Cliente 3",
+                    producto = "Producto 1",
+                    cantidad = "1 Unidad"
                 )
             }
         }
@@ -104,13 +117,12 @@ fun PedidoCard(
     cliente: String,
     producto: String,
     cantidad: String,
-    prioridadInicial: String,
     modifier: Modifier = Modifier
 ) {
-    var prioridad by remember { mutableStateOf(prioridadInicial) }
+    var prioridad by remember { mutableStateOf("Media") }
 
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(8.dp),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -156,7 +168,7 @@ private fun PrioridadSelector(
     onSeleccion: (String) -> Unit
 ) {
     var expandido by remember { mutableStateOf(false) }
-    val opciones = listOf("Alta", "Media", "Baja")
+    val opciones = listOf("Alta", "Media", "Baja", "Completado")
 
     Box {
         Row(
