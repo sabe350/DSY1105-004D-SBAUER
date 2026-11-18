@@ -53,7 +53,6 @@ class AuthManager (private val context: Context) {
                 }
             } else {
                 return Resultado(errorMessage = "Error de Google")
-
             }
         } catch (e: Exception) {
             return Resultado(errorMessage = e.toString())
